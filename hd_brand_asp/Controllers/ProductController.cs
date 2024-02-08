@@ -35,7 +35,13 @@ namespace hd_brand_asp.Controllers
         {
             return _unitOfWork.ProductRep.getProductBySize(size).ToList();
         }
+        [HttpGet]
+        [Route("GetSizeofProduct")]
+        public async Task<ActionResult<IEnumerable<Productsize>>> GetSizeofProduct(int id)
 
+        {
+            return _unitOfWork.ProductRep.getSizes(id).ToList();
+        }
 
     }
 }

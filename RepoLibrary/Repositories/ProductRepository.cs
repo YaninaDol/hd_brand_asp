@@ -19,7 +19,7 @@ namespace RepoLibrary.Repositories
             if (db.Products.Any(x => x.Id.Equals(IdUpdate)))
 
             {
-
+                
                 db.Products.Where(x => x.Id == IdUpdate).FirstOrDefault().Name = item.Name;
                
                 //add other fields
@@ -106,7 +106,6 @@ namespace RepoLibrary.Repositories
             if (db.Products.Any(x => x.Id.Equals(productId)))
 
             {
-
                 return db.Productsizes.Where(x => x.Productid == productId).ToList();
 
             }
