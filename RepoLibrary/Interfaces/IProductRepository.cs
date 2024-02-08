@@ -10,8 +10,8 @@ namespace RepoLibrary
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-        IEnumerable<Product> getAllProducts();
-        IEnumerable<Product> getSizes(int idProduct);
+        IEnumerable<Productsize> getSizes(int idProduct);
+        IEnumerable<Product> getProductBySize(int idProduct);
         IEnumerable<Product> getByCategory(int id);
         IEnumerable<Product> getByShoeType(int id);
         IEnumerable<Product> getByMaterial(int id);

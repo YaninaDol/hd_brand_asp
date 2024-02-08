@@ -14,7 +14,7 @@ public partial class Product
     public int? Categoryid { get; set; }
 
     public int? Seasonid { get; set; }
-    public string? Material { get; set; }
+    public int? Materialid { get; set; }
 
     public virtual Category? Category { get; set; }
 

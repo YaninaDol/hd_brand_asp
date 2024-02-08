@@ -85,7 +85,7 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
         });
         modelBuilder.Entity<Material>(entity =>
         {
-            entity.ToTable("Materials"); // Указываем имя таблицы в базе данных
+            entity.ToTable("Materials"); 
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Name).IsRequired();
             
@@ -93,7 +93,7 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
 
         modelBuilder.Entity<ShoeType>(entity =>
         {
-            entity.ToTable("ShoeTypes"); // Указываем имя таблицы в базе данных
+            entity.ToTable("ShoeTypes"); 
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Name).IsRequired();
            

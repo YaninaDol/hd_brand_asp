@@ -1,6 +1,7 @@
 using hd_brand_asp.Data;
 using hd_brand_asp.Models;
 using Microsoft.AspNetCore.Mvc;
+using RepoLibrary.Interfaces;
 
 namespace hd_brand_asp.Controllers
 {
@@ -10,18 +11,31 @@ namespace hd_brand_asp.Controllers
     public class ProductController : ControllerBase
     {
 
-        private readonly HdBrandDboContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        //private readonly ICacheService _cacheService;
 
-        public ProductController(HdBrandDboContext context)
+        public ProductController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
+            //  _cacheService = cacheService;
+
         }
+
         [HttpGet]
         [Route("GetProducts")]
         public async Task<ActionResult<IEnumerable<Product>>> GetAll()
 
         {
-            return _context.Products.ToList();
+            return _unitOfWork.ProductRep.GetAll().ToList(); 
         }
+        [HttpGet]
+        [Route("GetProductsBySize")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsBySize(int size)
+
+        {
+            return _unitOfWork.ProductRep.getProductBySize(size).ToList();
+        }
+
+
     }
 }
