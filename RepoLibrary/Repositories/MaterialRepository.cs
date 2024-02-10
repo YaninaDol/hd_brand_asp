@@ -4,9 +4,9 @@ using hd_brand_asp.Models;
 
 namespace RepoLibrary.Repositories
 {
-    public class CategoryRepository : GenericRepository<Category>, ICategoryRep
+    public class MaterialRepository : GenericRepository<Material>, IMaterialRep
     {
-        public CategoryRepository(HdBrandDboContext context) : base(context)
+        public MaterialRepository(HdBrandDboContext context) : base(context)
 
         {
 

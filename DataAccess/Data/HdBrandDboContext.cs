@@ -17,6 +17,7 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
         : base(options)
     {
     }
+    public virtual DbSet<SeasonShoeType> SeasonShoeTypes { get; set; }
     public virtual DbSet<Material> Materials { get; set; }
     public virtual DbSet<ShoeType> ShoeTypes { get; set; }
 
@@ -142,6 +143,13 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<IdentityUserToken<string>>()
             .ToTable("AspNetUserTokens")
             .HasKey(ut => new { ut.UserId, ut.LoginProvider, ut.Name });
+
+        modelBuilder.Entity<SeasonShoeType>()
+            .HasKey(sst => sst.Id);
+
+        
+
+
         OnModelCreatingPartial(modelBuilder);
     }
     

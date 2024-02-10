@@ -8,9 +8,14 @@ namespace RepoLibrary.Interfaces
 {
     public interface IUnitOfWork:IDisposable
     {
-        public ICategoryRep CategoryRep { get; }
-      
+        
         public IProductRepository ProductRep { get; }
+
+        public ICategoryRep CategoryRep { get; }
+        public IShoeTypeRep ShoeTypeRep { get; }
+        public IMaterialRep MaterialRep { get; }
+        public ISeasonRep SeasonRep { get; }    
+
        public int Commit();
     }
 }

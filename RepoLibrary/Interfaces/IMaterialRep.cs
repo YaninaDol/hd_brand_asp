@@ -9,7 +9,7 @@ using hd_brand_asp.Models;
 
 namespace RepoLibrary
 {
-    public interface ICategoryRep:IGenericRepository<Category>
+    public interface IMaterialRep:IGenericRepository<Material>
     {
        
 

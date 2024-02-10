@@ -4,14 +4,15 @@ using hd_brand_asp.Models;
 
 namespace RepoLibrary.Repositories
 {
-    public class CategoryRepository : GenericRepository<Category>, ICategoryRep
+    public class SeasonRepository : GenericRepository<Season>, ISeasonRep
     {
-        public CategoryRepository(HdBrandDboContext context) : base(context)
+        public SeasonRepository(HdBrandDboContext context) : base(context)
 
         {
 
         }
 
      
+
     }
 }

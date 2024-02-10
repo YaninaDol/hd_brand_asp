@@ -1,4 +1,5 @@
 ﻿using hd_brand_asp.Data;
+using Microsoft.EntityFrameworkCore;
 using RepoLibrary.Interfaces;
 
 namespace RepoLibrary.Repositories
@@ -17,9 +18,10 @@ namespace RepoLibrary.Repositories
         public void Create(T item) => db.Set<T>().Add(item); 
        
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
              db.Set<T>().Remove(db.Set<T>().Find(id));
+            return true;
         }
 
         public T Get(int id) 
@@ -32,6 +34,9 @@ namespace RepoLibrary.Repositories
 
         public IEnumerable<T> GetAll()=>db.Set<T>().ToList();
 
-       
+        public void Update(T entity)
+        {
+            db.Entry(entity).State = EntityState.Modified;
+        }
     }
 }
