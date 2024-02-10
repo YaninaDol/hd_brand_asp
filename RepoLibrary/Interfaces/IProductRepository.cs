@@ -16,7 +16,6 @@ namespace RepoLibrary
         IEnumerable<Product> getByShoeType(int id);
         IEnumerable<Product> getByMaterial(int id);
         IEnumerable<Product> getBySeason(int id);
-        bool Update(int IdUpdate, Product item);
 
         bool deleteSize(int Id,int Size);
 

@@ -15,7 +15,8 @@ public partial class Product
 
     public int? Seasonid { get; set; }
     public int? Materialid { get; set; }
-
+    
+    public int? Price { get; set; }
     public virtual Category? Category { get; set; }
 
     public virtual ICollection<Productsize> Productsizes { get; } = new List<Productsize>();

@@ -14,21 +14,7 @@ namespace RepoLibrary.Repositories
 
 
         
-        public bool Update(int IdUpdate, Product item)
-        {
-            if (db.Products.Any(x => x.Id.Equals(IdUpdate)))
-
-            {
-                
-                db.Products.Where(x => x.Id == IdUpdate).FirstOrDefault().Name = item.Name;
-               
-                //add other fields
-                return true;
-
-            }
-            else return false;
-
-        }
+        
 
         bool IProductRepository.deleteSize(int Id, int Size)
         {

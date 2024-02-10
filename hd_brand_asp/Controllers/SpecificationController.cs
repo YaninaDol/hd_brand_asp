@@ -59,7 +59,7 @@ namespace WebApplication_Atlantis.Controllers
 
 
             }
-            catch (Exception ex) { return Results.Ok(ex.Message); }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
 
         }
 
@@ -129,7 +129,7 @@ namespace WebApplication_Atlantis.Controllers
                 return Results.Ok();
 
             }
-            catch (Exception ex) { return Results.Ok(ex.Message); }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
 
         }
 
@@ -154,7 +154,7 @@ namespace WebApplication_Atlantis.Controllers
 
 
             }
-            catch (Exception ex) { return Results.Ok(ex.Message); }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
 
         }
 
@@ -224,7 +224,7 @@ namespace WebApplication_Atlantis.Controllers
                 return Results.Ok();
 
             }
-            catch (Exception ex) { return Results.Ok(ex.Message); }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
 
         }
 
@@ -245,11 +245,11 @@ namespace WebApplication_Atlantis.Controllers
                     return Results.Ok();
                 }
 
-                else return Results.Ok("Bad request");
+                else return Results.BadRequest("Bad request");
 
 
             }
-            catch (Exception ex) { return Results.Ok(ex.Message); }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
 
         }
 
@@ -315,10 +315,10 @@ namespace WebApplication_Atlantis.Controllers
 
                 _unitOfWork.SeasonRep.Create(new Season() { Name = seasonName });
                 _unitOfWork.Commit();
-                return Results.Ok();
+                return Results.BadRequest();
 
             }
-            catch (Exception ex) { return Results.Ok(ex.Message); }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
 
         }
 
@@ -339,11 +339,11 @@ namespace WebApplication_Atlantis.Controllers
                     return Results.Ok();
                 }
 
-                else return Results.Ok("Bad request");
+                else return Results.BadRequest("Bad request");
 
 
             }
-            catch (Exception ex) { return Results.Ok(ex.Message); }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
 
         }
 
