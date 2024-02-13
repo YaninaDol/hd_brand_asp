@@ -17,9 +17,9 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
         : base(options)
     {
     }
-    public virtual DbSet<SeasonShoeType> SeasonShoeTypes { get; set; }
+    public virtual DbSet<SeasonType> SeasonTypes { get; set; }
     public virtual DbSet<Material> Materials { get; set; }
-    public virtual DbSet<ShoeType> ShoeTypes { get; set; }
+    public virtual DbSet<SubCategory> SubCategories { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
 
@@ -52,9 +52,9 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
             entity.ToTable("product");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.ShoeType)
+            entity.Property(e => e.SubCategoryid)
                 .HasMaxLength(100)
-                .HasColumnName("shoetype");
+                .HasColumnName("subcategory");
             entity.Property(e => e.Categoryid).HasColumnName("categoryid");
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
@@ -92,9 +92,9 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
             
         });
 
-        modelBuilder.Entity<ShoeType>(entity =>
+        modelBuilder.Entity<SubCategory>(entity =>
         {
-            entity.ToTable("ShoeTypes"); 
+            entity.ToTable("SubCategories"); 
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Name).IsRequired();
            
@@ -144,7 +144,7 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
             .ToTable("AspNetUserTokens")
             .HasKey(ut => new { ut.UserId, ut.LoginProvider, ut.Name });
 
-        modelBuilder.Entity<SeasonShoeType>()
+        modelBuilder.Entity<SeasonType>()
             .HasKey(sst => sst.Id);
 
         

@@ -20,7 +20,7 @@ namespace RepoLibrary.UnitofWork
             CategoryRep = new CategoryRepository(_context);
 
             ProductRep = new ProductRepository(_context);
-            ShoeTypeRep = new ShoeTypeRepository(_context); 
+            SubCategoryRep = new SubCategoryRepository(_context); 
             MaterialRep = new MaterialRepository(_context); 
             SeasonRep = new SeasonRepository(_context); 
 
@@ -31,7 +31,7 @@ namespace RepoLibrary.UnitofWork
         public ICategoryRep CategoryRep { get;  }
 
         public IProductRepository ProductRep { get; }
-        public IShoeTypeRep ShoeTypeRep { get; }
+        public ISubCategoryRep SubCategoryRep { get; }
         public IMaterialRep MaterialRep { get; }
         public ISeasonRep SeasonRep { get; }
 

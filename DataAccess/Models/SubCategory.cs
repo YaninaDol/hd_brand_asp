@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 namespace hd_brand_asp.Models;
 
-public partial class SeasonShoeType
+public partial class SubCategory
 {
     public int Id { get; set; }
 
-    public int SeasonId { get; set; }
-    public int ShoeTypeId { get; set; }
+    public string Name { get; set; } = null!;
 }

@@ -202,7 +202,7 @@ namespace WebApplication_Atlantis.Controllers
        
         [HttpGet]
         [Route("getUsers")]
-        [Authorize(Roles = UserRoles.Admin)]
+        //[Authorize(Roles = UserRoles.Admin)]
 
         public async Task<IActionResult> getUsers()
         {

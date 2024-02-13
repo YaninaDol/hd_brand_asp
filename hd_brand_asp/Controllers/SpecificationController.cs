@@ -213,13 +213,13 @@ namespace WebApplication_Atlantis.Controllers
 
         [HttpPost]
         //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
-        [Route("AddShoeType")]
-        public IResult AddShoeType([FromForm] string shoeTypeName)
+        [Route("AddSubCategory")]
+        public IResult AddSubCategory([FromForm] string subCategoryName)
         {
             try
             {
 
-                _unitOfWork.ShoeTypeRep.Create(new ShoeType() { Name = shoeTypeName });
+                _unitOfWork.SubCategoryRep.Create(new hd_brand_asp.Models.SubCategory() { Name = subCategoryName });
                 _unitOfWork.Commit();
                 return Results.Ok();
 
@@ -231,16 +231,16 @@ namespace WebApplication_Atlantis.Controllers
 
         [HttpPost]
         //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
-        [Route("UpdateShoeType")]
-        public IResult UpdateShoeType([FromForm] int id, [FromForm] string newName)
+        [Route("UpdateSubCategory")]
+        public IResult UpdateSubCategory([FromForm] int id, [FromForm] string newName)
         {
             try
             {
-                var item = _unitOfWork.ShoeTypeRep.Get(id);
+                var item = _unitOfWork.SubCategoryRep.Get(id);
                 if (item != null)
                 {
                     item.Name = newName;
-                    _unitOfWork.ShoeTypeRep.Update(item);
+                    _unitOfWork.SubCategoryRep.Update(item);
                     _unitOfWork.Commit();
                     return Results.Ok();
                 }
@@ -257,17 +257,17 @@ namespace WebApplication_Atlantis.Controllers
 
         [HttpPost]
         //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
-        [Route("DeleteShoeType")]
-        public IResult DeleteShoeType([FromForm] int id)
+        [Route("DeleteSubCategory")]
+        public IResult DeleteSubCategory([FromForm] int id)
         {
             try
             {
-                if (_unitOfWork.ShoeTypeRep.Delete(id) == true)
+                if (_unitOfWork.SubCategoryRep.Delete(id) == true)
                 {
                     _unitOfWork.Commit();
                     return Results.Ok();
                 }
-                return Results.BadRequest("Remove items from shoe type!");
+                return Results.BadRequest("Remove items from sub category!");
 
             }
             catch (Exception ex) { return Results.BadRequest(ex.Message); }
@@ -275,15 +275,15 @@ namespace WebApplication_Atlantis.Controllers
         }
 
         [HttpGet]
-        [Route("GetShoeTypeById")]
+        [Route("GetSubCategoryRepById")]
 
-        public IResult GetShoeTypeById(int id)
+        public IResult GetSubCategoryRepById(int id)
         {
 
             try
             {
 
-                return Results.Ok(_unitOfWork.ShoeTypeRep.Get(id));
+                return Results.Ok(_unitOfWork.SubCategoryRep.Get(id));
 
             }
             catch (Exception ex) { return Results.BadRequest(ex.Message); }
@@ -293,13 +293,13 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpGet]
-        [Route("GetAllShoeTypes")]
+        [Route("GetAllSubCategories")]
 
-        public async Task<ActionResult<IEnumerable<ShoeType>>> GetAllShoeTypes()
+        public async Task<ActionResult<IEnumerable<hd_brand_asp.Models.SubCategory>>> GetAllSubCategories()
         {
             try
             {
-                return _unitOfWork.ShoeTypeRep.GetAll().ToList();
+                return _unitOfWork.SubCategoryRep.GetAll().ToList();
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
 

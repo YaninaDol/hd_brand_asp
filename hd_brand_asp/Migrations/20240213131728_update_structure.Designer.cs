@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hd_brand_asp.Data;
@@ -11,9 +12,11 @@ using hd_brand_asp.Data;
 namespace hd_brand_asp.Migrations
 {
     [DbContext(typeof(HdBrandDboContext))]
-    partial class HdBrandDboContextModelSnapshot : ModelSnapshot
+    [Migration("20240213131728_update_structure")]
+    partial class update_structure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,10 +242,6 @@ namespace hd_brand_asp.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("categoryid");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int?>("Materialid")
                         .HasColumnType("integer");
 
@@ -262,14 +261,10 @@ namespace hd_brand_asp.Migrations
                     b.Property<string>("Sizes")
                         .HasColumnType("text");
 
-                    b.Property<string>("SubCategoryid")
+                    b.Property<string>("SubCategory")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
                         .HasColumnName("subcategory");
-
-                    b.Property<string>("Video")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id")
                         .HasName("product_pkey");

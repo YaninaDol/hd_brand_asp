@@ -62,11 +62,11 @@ namespace RepoLibrary.Repositories
 
         IEnumerable<Product> IProductRepository.getByShoeType(int id)
         {
-            if (db.ShoeTypes.Any(x => x.Id.Equals(id)))
+            if (db.SubCategories.Any(x => x.Id.Equals(id)))
 
             {
 
-                return db.Products.Where(x => Convert.ToInt32(x.ShoeType) == id).ToList();
+                return db.Products.Where(x => Convert.ToInt32(x.SubCategoryid) == id).ToList();
 
             }
             else return db.Products.ToList();

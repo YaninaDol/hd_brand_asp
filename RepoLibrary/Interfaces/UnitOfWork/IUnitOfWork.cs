@@ -12,7 +12,7 @@ namespace RepoLibrary.Interfaces
         public IProductRepository ProductRep { get; }
 
         public ICategoryRep CategoryRep { get; }
-        public IShoeTypeRep ShoeTypeRep { get; }
+        public ISubCategoryRep SubCategoryRep { get; }
         public IMaterialRep MaterialRep { get; }
         public ISeasonRep SeasonRep { get; }    
 

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hd_brand_asp.Data;
@@ -11,9 +12,11 @@ using hd_brand_asp.Data;
 namespace hd_brand_asp.Migrations
 {
     [DbContext(typeof(HdBrandDboContext))]
-    partial class HdBrandDboContextModelSnapshot : ModelSnapshot
+    [Migration("20240210192736_update_product")]
+    partial class update_product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,10 +242,6 @@ namespace hd_brand_asp.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("categoryid");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int?>("Materialid")
                         .HasColumnType("integer");
 
@@ -259,17 +258,10 @@ namespace hd_brand_asp.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("seasonid");
 
-                    b.Property<string>("Sizes")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubCategoryid")
+                    b.Property<string>("ShoeType")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
-                        .HasColumnName("subcategory");
-
-                    b.Property<string>("Video")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnName("shoetype");
 
                     b.HasKey("Id")
                         .HasName("product_pkey");
@@ -318,7 +310,7 @@ namespace hd_brand_asp.Migrations
                     b.ToTable("season", (string)null);
                 });
 
-            modelBuilder.Entity("hd_brand_asp.Models.SeasonType", b =>
+            modelBuilder.Entity("hd_brand_asp.Models.SeasonShoeType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -329,12 +321,29 @@ namespace hd_brand_asp.Migrations
                     b.Property<int>("SeasonId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SubCategoryId")
+                    b.Property<int>("ShoeTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("SeasonTypes");
+                    b.ToTable("SeasonShoeTypes");
+                });
+
+            modelBuilder.Entity("hd_brand_asp.Models.ShoeType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShoeTypes", (string)null);
                 });
 
             modelBuilder.Entity("hd_brand_asp.Models.Size", b =>
@@ -354,23 +363,6 @@ namespace hd_brand_asp.Migrations
                         .HasName("size_pkey");
 
                     b.ToTable("size", (string)null);
-                });
-
-            modelBuilder.Entity("hd_brand_asp.Models.SubCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SubCategories", (string)null);
                 });
 
             modelBuilder.Entity("hd_brand_asp.Models.Product", b =>

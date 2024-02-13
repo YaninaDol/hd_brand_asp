@@ -9,7 +9,7 @@ using hd_brand_asp.Models;
 
 namespace RepoLibrary
 {
-    public interface IShoeTypeRep:IGenericRepository<ShoeType>
+    public interface ISubCategoryRep:IGenericRepository<SubCategory>
     {
        
 

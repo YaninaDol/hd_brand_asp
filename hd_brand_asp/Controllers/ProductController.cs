@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RepoLibrary.Interfaces;
 using RepositoriesLibrary.Roles;
+using System.Security.Cryptography;
 
 namespace hd_brand_asp.Controllers
 {
@@ -28,9 +29,9 @@ namespace hd_brand_asp.Controllers
         //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Add")]
 
-        public IResult Add([FromForm] string Name, [FromForm] string ShoeType, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid,  [FromForm] int Price)
+        public IResult Add([FromForm] string Name, [FromForm] string Image, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid,  [FromForm] int Price, [FromForm] string Sizes)
         {
-            _unitOfWork.ProductRep.Create(new Product() { Name = Name, ShoeType = ShoeType, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price });
+            _unitOfWork.ProductRep.Create(new Product() { Name = Name, SubCategoryid = SubCategoryid,Image=Image,Video=Video, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price, Sizes= Sizes });
             _unitOfWork.Commit();
 
             //  _cacheService.SetData("Products", _unitOfWork.ProductRep.GetAll(), DateTimeOffset.Now.AddDays(1));
@@ -57,7 +58,7 @@ namespace hd_brand_asp.Controllers
         [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Update")]
 
-        public IResult Update([FromForm] int id,[FromForm] string Name, [FromForm] string ShoeType, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price)
+        public IResult Update([FromForm] int id,[FromForm] string Name, [FromForm] string Image, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
         {
             try
             {
@@ -65,12 +66,14 @@ namespace hd_brand_asp.Controllers
                 if (item != null)
                 {
                     item.Name = Name;
-                    item.ShoeType = ShoeType;
+                    item.SubCategoryid = SubCategoryid;
                     item.Price = Price;
                     item.Materialid = Materialid;
                     item.Categoryid = Categoryid;
                     item.Seasonid = Seasonid;
-
+                    item.Sizes = Sizes;
+                    item.Image = Image;
+                    item.Video = Video;
                     _unitOfWork.ProductRep.Update(item);
                     _unitOfWork.Commit();
                     return Results.Ok();
