@@ -35,7 +35,10 @@ namespace hd_brand_asp.Controllers
             _unitOfWork.Commit();
 
             //  _cacheService.SetData("Products", _unitOfWork.ProductRep.GetAll(), DateTimeOffset.Now.AddDays(1));
-            return Results.Ok();
+            var lastAddedProduct = _unitOfWork.ProductRep.GetAll().OrderByDescending(p => p.Id).FirstOrDefault();
+
+            // ¬ернуть последний добавленный продукт
+            return Results.Ok(lastAddedProduct);
 
 
         }
@@ -55,7 +58,7 @@ namespace hd_brand_asp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Update")]
 
         public IResult Update([FromForm] int id,[FromForm] string Name, [FromForm] string Image, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
@@ -76,7 +79,7 @@ namespace hd_brand_asp.Controllers
                     item.Video = Video;
                     _unitOfWork.ProductRep.Update(item);
                     _unitOfWork.Commit();
-                    return Results.Ok();
+                    return Results.Ok(item);
                 }
 
                 else return Results.BadRequest();
