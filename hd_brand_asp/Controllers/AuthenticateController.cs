@@ -156,7 +156,7 @@ namespace WebApplication_Atlantis.Controllers
 
         [HttpPost]
         [Route("updateUser")]
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> updateUser([FromForm] string userID, [FromForm] string UserName, [FromForm] string email )
         {
             var user = await _userManager.FindByIdAsync(userID);
@@ -185,7 +185,7 @@ namespace WebApplication_Atlantis.Controllers
 
         [HttpPost]
         [Route("deleteUser")]
-       // [Authorize(Roles = UserRoles.Admin)]
+       [Authorize(Roles = UserRoles.Admin)]
 
         public async Task<IActionResult> deleteUser([FromForm] string userID)
         {
@@ -202,12 +202,12 @@ namespace WebApplication_Atlantis.Controllers
        
         [HttpGet]
         [Route("getUsers")]
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
 
         public async Task<IActionResult> getUsers()
         {
            
-                return Ok(_userManager.Users.ToList().Where(x=>x.UserName!= "AdminAdmin").ToList());
+                return Ok(_userManager.Users.ToList().Where(x=>x.UserName!= "AdminAdmin01").ToList());
            
 
         }
