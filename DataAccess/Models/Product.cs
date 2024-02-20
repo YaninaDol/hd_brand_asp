@@ -6,11 +6,13 @@ namespace hd_brand_asp.Models;
 public partial class Product
 {
     public int Id { get; set; }
-
+    public string Artikel { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string Image { get; set; } = null!;
+    public string Image2 { get; set; } = null!;
     public string Video { get; set; } = null!;
-
+    public bool? isNew { get; set; }
+    public bool? isDiscount { get; set; }
     public string? SubCategoryid { get; set; }
 
     public int? Categoryid { get; set; }
@@ -19,6 +21,7 @@ public partial class Product
     public int? Materialid { get; set; }
     
     public int? Price { get; set; }
+    public int? SalePrice { get; set; }
     public string? Sizes { get; set; }
     public virtual Category? Category { get; set; }
 
