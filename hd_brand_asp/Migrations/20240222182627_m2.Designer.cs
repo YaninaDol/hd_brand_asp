@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hd_brand_asp.Data;
@@ -11,9 +12,11 @@ using hd_brand_asp.Data;
 namespace hd_brand_asp.Migrations
 {
     [DbContext(typeof(HdBrandDboContext))]
-    partial class HdBrandDboContextModelSnapshot : ModelSnapshot
+    [Migration("20240222182627_m2")]
+    partial class m2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,11 +303,8 @@ namespace hd_brand_asp.Migrations
 
             modelBuilder.Entity("hd_brand_asp.Models.Productssize", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Productid")
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -316,10 +316,7 @@ namespace hd_brand_asp.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<int?>("Price")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Productid")
+                    b.Property<int>("Price")
                         .HasColumnType("integer");
 
                     b.Property<string>("Size")
@@ -327,9 +324,7 @@ namespace hd_brand_asp.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("Productid");
+                    b.HasKey("Productid");
 
                     b.ToTable("Productssizes");
                 });

@@ -9,10 +9,10 @@ using hd_brand_asp.Models;
 
 namespace RepoLibrary
 {
-    public interface ISeasonRep:IGenericRepository<Season>
+    public interface IProductssize:IGenericRepository<Productssize>
     {
-       
 
-
+        void DeleteAll(int id);
+        IEnumerable<Productssize> getallbyid(int id);
     }
 }

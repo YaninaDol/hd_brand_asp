@@ -10,13 +10,13 @@ namespace RepoLibrary
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-        IEnumerable<Productsize> getSizes(int idProduct);
-        IEnumerable<Product> getProductBySize(int idProduct);
+        IEnumerable<Productssize> getSizes(int idProduct);
         IEnumerable<Product> getByCategory(int id);
         IEnumerable<Product> getByShoeType(int id);
         IEnumerable<Product> getByMaterial(int id);
         IEnumerable<Product> getBySeason(int id);
-
+        bool procedure(string id,Product item);
+        IEnumerable<Productssize> updateprocedure(int id);
         bool deleteSize(int Id,int Size);
 
     }

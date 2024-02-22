@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hd_brand_asp.Data;
@@ -11,9 +12,11 @@ using hd_brand_asp.Data;
 namespace hd_brand_asp.Migrations
 {
     [DbContext(typeof(HdBrandDboContext))]
-    partial class HdBrandDboContextModelSnapshot : ModelSnapshot
+    [Migration("20240222162433_updatesizes")]
+    partial class updatesizes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -298,40 +301,20 @@ namespace hd_brand_asp.Migrations
                     b.ToTable("product", (string)null);
                 });
 
-            modelBuilder.Entity("hd_brand_asp.Models.Productssize", b =>
+            modelBuilder.Entity("hd_brand_asp.Models.Productsize", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<int?>("Price")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Productid")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("productid");
 
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                    b.Property<int>("Sizeid")
+                        .HasColumnType("integer")
+                        .HasColumnName("sizeid");
 
-                    b.HasKey("Id");
+                    b.HasKey("Productid", "Sizeid")
+                        .HasName("productsize_pkey");
 
-                    b.HasIndex("Productid");
-
-                    b.ToTable("Productssizes");
+                    b.ToTable("productsize", (string)null);
                 });
 
             modelBuilder.Entity("hd_brand_asp.Models.Season", b =>
@@ -427,12 +410,13 @@ namespace hd_brand_asp.Migrations
                     b.Navigation("Season");
                 });
 
-            modelBuilder.Entity("hd_brand_asp.Models.Productssize", b =>
+            modelBuilder.Entity("hd_brand_asp.Models.Productsize", b =>
                 {
                     b.HasOne("hd_brand_asp.Models.Product", "Product")
-                        .WithMany("ProductSizes")
+                        .WithMany("Productsizes")
                         .HasForeignKey("Productid")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("productsize_productid_fkey");
 
                     b.Navigation("Product");
                 });
@@ -444,7 +428,7 @@ namespace hd_brand_asp.Migrations
 
             modelBuilder.Entity("hd_brand_asp.Models.Product", b =>
                 {
-                    b.Navigation("ProductSizes");
+                    b.Navigation("Productsizes");
                 });
 
             modelBuilder.Entity("hd_brand_asp.Models.Season", b =>

@@ -72,30 +72,45 @@ namespace RepoLibrary.Repositories
             else return db.Products.ToList();
         }
 
-        IEnumerable<Product> IProductRepository.getProductBySize(int size)
-        {
-            if (db.Sizes.Any(x => x.Value.Equals(size)))
-
-            {
-                var result = from product in db.Products
-                             join productSize in db.Productsizes on product.Id equals productSize.Productid
-                             where productSize.Sizeid == size
-                             select product;
-                return result;
-
-
-            }
-            else return null;
-        }
-            IEnumerable<Productsize> IProductRepository.getSizes(int productId)
+       
+            IEnumerable<Productssize> IProductRepository.getSizes(int productId)
         {
             if (db.Products.Any(x => x.Id.Equals(productId)))
 
             {
-                return db.Productsizes.Where(x => x.Productid == productId).ToList();
+                return db.Productssizes.Where(x => x.Productid == productId).ToList();
 
             }
             else return null;
+        }
+
+        bool IProductRepository.procedure(string id,Product item)
+        {
+           if (id=="1")
+            {
+
+                for(int i=35;i<43;i++)
+                {
+                    db.Productssizes.Add(new Productssize() { Productid = item.Id,Image=item.Image,Name=item.Name,Size=i.ToString(),Price=item.Price });
+                }
+                return true;
+            }
+            else
+            {
+
+               
+                db.Productssizes.Add(new Productssize() { Productid = item.Id, Image = item.Image, Name = item.Name, Size = "XS", Price = item.Price });
+                db.Productssizes.Add(new Productssize() { Productid = item.Id, Image = item.Image, Name = item.Name, Size = "S", Price = item.Price });
+                db.Productssizes.Add(new Productssize() { Productid = item.Id, Image = item.Image, Name = item.Name, Size = "M", Price = item.Price });
+                db.Productssizes.Add(new Productssize() { Productid = item.Id, Image = item.Image, Name = item.Name, Size = "L", Price = item.Price });
+                db.Productssizes.Add(new Productssize() { Productid = item.Id, Image = item.Image, Name = item.Name, Size = "XL", Price = item.Price });
+                return true;
+            }
+        }
+
+        IEnumerable<Productssize> IProductRepository.updateprocedure(int id)
+        {
+           return db.Productssizes.Where((x)=>x.Productid.Equals(id)).ToList();
         }
     }
 }

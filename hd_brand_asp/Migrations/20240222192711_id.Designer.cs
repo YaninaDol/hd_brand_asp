@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hd_brand_asp.Data;
@@ -11,9 +12,11 @@ using hd_brand_asp.Data;
 namespace hd_brand_asp.Migrations
 {
     [DbContext(typeof(HdBrandDboContext))]
-    partial class HdBrandDboContextModelSnapshot : ModelSnapshot
+    [Migration("20240222192711_id")]
+    partial class id
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,6 +303,9 @@ namespace hd_brand_asp.Migrations
 
             modelBuilder.Entity("hd_brand_asp.Models.Productssize", b =>
                 {
+                    b.Property<int>("Productid")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
@@ -319,17 +325,12 @@ namespace hd_brand_asp.Migrations
                     b.Property<int?>("Price")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Productid")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Size")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("Productid");
+                    b.HasKey("Productid");
 
                     b.ToTable("Productssizes");
                 });

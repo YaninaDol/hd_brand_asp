@@ -44,7 +44,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
-builder.Services.AddTransient<ISeasonRep, SeasonRepository>();
+builder.Services.AddTransient<ISizesRep, SizeRepository>();
 builder.Services.AddTransient<IMaterialRep, MaterialRepository>();
 builder.Services.AddTransient<ISubCategoryRep, SubCategoryRepository>();
 builder.Services.AddTransient<ICategoryRep, CategoryRepository>();

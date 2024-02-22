@@ -25,7 +25,7 @@ public partial class Product
     public string? Sizes { get; set; }
     public virtual Category? Category { get; set; }
 
-    public virtual ICollection<Productsize> Productsizes { get; } = new List<Productsize>();
+    public virtual ICollection<Productssize> ProductSizes { get; set; } = new List<Productssize>();
 
     public virtual Season? Season { get; set; }
 }

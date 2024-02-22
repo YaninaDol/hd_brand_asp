@@ -25,7 +25,7 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
 
     public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<Productsize> Productsizes { get; set; }
+    public virtual DbSet<Productssize> Productssizes { get; set; }
 
     public virtual DbSet<Season> Seasons { get; set; }
 
@@ -70,19 +70,21 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
                 .HasConstraintName("product_seasonid_fkey");
         });
 
-        modelBuilder.Entity<Productsize>(entity =>
+        modelBuilder.Entity<Productssize>(entity =>
         {
-            entity.HasKey(e => new { e.Productid, e.Sizeid }).HasName("productsize_pkey");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Size).HasMaxLength(50);
+            entity.Property(e => e.Image).HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Price);
 
-            entity.ToTable("productsize");
+            // Relationship with Product entity
 
-            entity.Property(e => e.Productid).HasColumnName("productid");
-            entity.Property(e => e.Sizeid).HasColumnName("sizeid");
+            entity.HasOne(e => e.Product)
+                .WithMany(p => p.ProductSizes)
+                .HasForeignKey(e => e.Productid)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
-            entity.HasOne(d => d.Product).WithMany(p => p.Productsizes)
-                .HasForeignKey(d => d.Productid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("productsize_productid_fkey");
         });
         modelBuilder.Entity<Material>(entity =>
         {

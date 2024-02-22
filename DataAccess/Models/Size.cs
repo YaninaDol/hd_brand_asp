@@ -7,5 +7,5 @@ public partial class Size
 {
     public int Id { get; set; }
 
-    public int? Value { get; set; }
+    public string? Value { get; set; }
 }

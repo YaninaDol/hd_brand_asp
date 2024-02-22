@@ -33,11 +33,16 @@ namespace hd_brand_asp.Controllers
         {
            
             _unitOfWork.ProductRep.Create(new Product() { Name = Name,Artikel=Artikel, SubCategoryid = SubCategoryid,Image=Image,Image2=Image2,isNew=isNew,isDiscount= isDiscount, SalePrice=SalePrice, Video=Video, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price, Sizes= Sizes });
+          
             _unitOfWork.Commit();
 
             //  _cacheService.SetData("Products", _unitOfWork.ProductRep.GetAll(), DateTimeOffset.Now.AddDays(1));
             var lastAddedProduct = _unitOfWork.ProductRep.GetAll().OrderByDescending(p => p.Id).FirstOrDefault();
-
+            if (lastAddedProduct != null)
+            {
+                _unitOfWork.ProductRep.procedure(Sizes, lastAddedProduct);
+                _unitOfWork.Commit();
+            }
             // ¬ернуть последний добавленный продукт
             return Results.Ok(lastAddedProduct);
 
@@ -49,8 +54,12 @@ namespace hd_brand_asp.Controllers
 
         public IResult Delete([FromForm] int Id)
         {
+            _unitOfWork.ProductssizeRep.DeleteAll(Id);
+            _unitOfWork.Commit();
             _unitOfWork.ProductRep.Delete(Id);
             _unitOfWork.Commit();
+
+            
 
             //  _cacheService.SetData("Products", _unitOfWork.ProductRep.GetAll(), DateTimeOffset.Now.AddDays(1));
             return Results.Ok();
@@ -68,6 +77,8 @@ namespace hd_brand_asp.Controllers
             try
             {
                 var item = _unitOfWork.ProductRep.Get(id);
+                var listitems = _unitOfWork.ProductRep.updateprocedure(id);
+               
                 if (item != null)
                 {
                     item.Name = Name;
@@ -85,6 +96,17 @@ namespace hd_brand_asp.Controllers
                     item.isDiscount = isDiscount;
                     item.SalePrice = SalePrice;
                     _unitOfWork.ProductRep.Update(item);
+                   
+
+
+                    foreach (var iter in listitems)
+                    {
+                        iter.Name = Name;
+                        iter.Price = SalePrice;
+                        iter.Image = Image;
+                        _unitOfWork.ProductssizeRep.Update(iter);
+                        
+                    }
                     _unitOfWork.Commit();
                     return Results.Ok(item);
                 }
@@ -104,20 +126,21 @@ namespace hd_brand_asp.Controllers
         {
             return _unitOfWork.ProductRep.GetAll().ToList(); 
         }
-        [HttpGet]
-        [Route("GetProductsBySize")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsBySize(int size)
-
-        {
-
-            return _unitOfWork.ProductRep.getProductBySize(size).ToList();
-        }
+       
         [HttpGet]
         [Route("GetSizeofProduct")]
-        public async Task<ActionResult<IEnumerable<Productsize>>> GetSizeofProduct(int id)
+        public async Task<ActionResult<IEnumerable<Productssize>>> GetSizeofProduct(int id)
 
         {
             return _unitOfWork.ProductRep.getSizes(id).ToList();
+        }
+
+        [HttpGet]
+        [Route("GetProductsByCategory")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(int id)
+
+        {
+            return _unitOfWork.ProductRep.getByCategory(id).ToList();
         }
 
     }

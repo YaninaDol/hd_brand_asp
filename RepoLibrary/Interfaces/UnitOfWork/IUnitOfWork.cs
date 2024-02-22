@@ -14,8 +14,9 @@ namespace RepoLibrary.Interfaces
         public ICategoryRep CategoryRep { get; }
         public ISubCategoryRep SubCategoryRep { get; }
         public IMaterialRep MaterialRep { get; }
-        public ISeasonRep SeasonRep { get; }    
+        public ISizesRep SizeRep { get; }
+        public IProductssize ProductssizeRep { get; }
 
-       public int Commit();
+        public int Commit();
     }
 }

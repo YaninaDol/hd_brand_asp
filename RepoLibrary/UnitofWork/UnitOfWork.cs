@@ -21,8 +21,9 @@ namespace RepoLibrary.UnitofWork
 
             ProductRep = new ProductRepository(_context);
             SubCategoryRep = new SubCategoryRepository(_context); 
-            MaterialRep = new MaterialRepository(_context); 
-            SeasonRep = new SeasonRepository(_context); 
+            MaterialRep = new MaterialRepository(_context);
+            SizeRep = new SizeRepository(_context); 
+            ProductssizeRep = new ProductssizeRepository(_context);
 
         }
     
@@ -33,7 +34,8 @@ namespace RepoLibrary.UnitofWork
         public IProductRepository ProductRep { get; }
         public ISubCategoryRep SubCategoryRep { get; }
         public IMaterialRep MaterialRep { get; }
-        public ISeasonRep SeasonRep { get; }
+        public ISizesRep SizeRep { get; }
+        public IProductssize ProductssizeRep { get; }
 
         public int Commit()=>_context.SaveChanges();    
 

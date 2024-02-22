@@ -179,6 +179,9 @@ namespace WebApplication_Atlantis.Controllers
 
         }
 
+
+
+
         [HttpGet]
         [Route("GetMaterialById")]
 
@@ -307,13 +310,13 @@ namespace WebApplication_Atlantis.Controllers
 
         [HttpPost]
         //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
-        [Route("AddSeason")]
-        public IResult AddSeason([FromForm] string seasonName)
+        [Route("AddSize")]
+        public IResult AddSize([FromForm] string sizeValue)
         {
             try
             {
 
-                _unitOfWork.SeasonRep.Create(new Season() { Name = seasonName });
+                _unitOfWork.SizeRep.Create(new Size() { Value = sizeValue });
                 _unitOfWork.Commit();
                 return Results.BadRequest();
 
@@ -325,16 +328,16 @@ namespace WebApplication_Atlantis.Controllers
 
         [HttpPost]
         //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
-        [Route("UpdateSeason")]
-        public IResult UpdateSeason([FromForm] int id, [FromForm] string newName)
+        [Route("UpdateSize")]
+        public IResult UpdateSize([FromForm] int id, [FromForm] string newName)
         {
             try
             {
-                var item = _unitOfWork.SeasonRep.Get(id);
+                var item = _unitOfWork.SizeRep.Get(id);
                 if (item != null)
                 {
-                    item.Name = newName;
-                    _unitOfWork.SeasonRep.Update(item);
+                    item.Value = newName;
+                    _unitOfWork.SizeRep.Update(item);
                     _unitOfWork.Commit();
                     return Results.Ok();
                 }
@@ -351,12 +354,12 @@ namespace WebApplication_Atlantis.Controllers
 
         [HttpPost]
         //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
-        [Route("DeleteSeason")]
-        public IResult DeleteSeason([FromForm] int id)
+        [Route("DeleteSize")]
+        public IResult DeleteSize([FromForm] int id)
         {
             try
             {
-                if (_unitOfWork.SeasonRep.Delete(id) == true)
+                if (_unitOfWork.SizeRep.Delete(id) == true)
                 {
                     _unitOfWork.Commit();
                     return Results.Ok();
@@ -369,21 +372,20 @@ namespace WebApplication_Atlantis.Controllers
         }
 
         [HttpGet]
-        [Route("GetSeasonById")]
+        [Route("GetSizeById")]
 
-        public IResult GetSeasonById(int id)
+        public IResult GetSizeById(int id)
         {
 
             try
             {
 
-                return Results.Ok(_unitOfWork.SeasonRep.Get(id));
+                return Results.Ok(_unitOfWork.SizeRep.Get(id));
 
             }
             catch (Exception ex) { return Results.BadRequest(ex.Message); }
 
         }
-
 
 
         [HttpGet]
@@ -393,7 +395,45 @@ namespace WebApplication_Atlantis.Controllers
         {
             try
             {
-                return _unitOfWork.SeasonRep.GetAll().ToList();
+                return _unitOfWork.SizeRep.GetSeasons;
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+
+        }
+        [HttpGet]
+        [Route("GetAllSizes")]
+
+        public async Task<ActionResult<IEnumerable<Size>>> GetAllSizes()
+        {
+            try
+            {
+                return _unitOfWork.SizeRep.GetAll().ToList();
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+
+        }
+        
+        [HttpGet]
+        [Route("GetSubCategoryNamesByCategoryId")]
+
+        public async Task<ActionResult<IEnumerable<SubCategory>>> GetSubCategoryNamesByCategoryId(int id)
+        {
+            try
+            {
+                return _unitOfWork.CategoryRep.GetSubCategoryNamesByCategoryId(id).ToList();
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+
+        }
+        
+        [HttpGet]
+        [Route("MaterialNamesByCategoryId")]
+
+        public async Task<ActionResult<IEnumerable<Material>>> MaterialNamesByCategoryId(int id)
+        {
+            try
+            {
+                return _unitOfWork.CategoryRep.MaterialNamesByCategoryId(id).ToList();
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
 
