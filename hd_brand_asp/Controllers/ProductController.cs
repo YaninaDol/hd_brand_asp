@@ -43,8 +43,8 @@ namespace hd_brand_asp.Controllers
                 _unitOfWork.ProductRep.procedure(Sizes, lastAddedProduct);
                 _unitOfWork.Commit();
             }
-            // ¬ернуть последний добавленный продукт
-            return Results.Ok(lastAddedProduct);
+         
+            return Results.Ok();
 
 
         }
@@ -108,7 +108,7 @@ namespace hd_brand_asp.Controllers
                         
                     }
                     _unitOfWork.Commit();
-                    return Results.Ok(item);
+                    return Results.Ok();
                 }
 
                 else return Results.BadRequest();
