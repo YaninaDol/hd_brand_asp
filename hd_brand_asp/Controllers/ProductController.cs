@@ -118,6 +118,21 @@ namespace hd_brand_asp.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetProductById")]
+
+        public IResult GetProductById(int id)
+        {
+
+            try
+            {
+
+                return Results.Ok(_unitOfWork.ProductRep.Get(id));
+
+            }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
+
+        }
 
         [HttpGet]
         [Route("GetProducts")]
