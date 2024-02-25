@@ -29,10 +29,10 @@ namespace hd_brand_asp.Controllers
         //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Add")]
 
-        public IResult Add([FromForm] string Name, [FromForm] string Image, [FromForm] string Artikel, [FromForm] string Image2, [FromForm] bool isNew, bool isDiscount,  [FromForm] int? SalePrice,[FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid,  [FromForm] int? Price, [FromForm] string Sizes)
+        public IResult Add([FromForm] string Name, [FromForm] string Image, [FromForm] string Image3, [FromForm] string Image2, [FromForm] bool isNew, bool isDiscount,  [FromForm] int? SalePrice,[FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid,  [FromForm] int? Price, [FromForm] string Sizes)
         {
            
-            _unitOfWork.ProductRep.Create(new Product() { Name = Name,Artikel=Artikel, SubCategoryid = SubCategoryid,Image=Image,Image2=Image2,isNew=isNew,isDiscount= isDiscount, SalePrice=SalePrice, Video=Video, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price, Sizes= Sizes });
+            _unitOfWork.ProductRep.Create(new Product() { Name = Name, Image3 = Image3, SubCategoryid = SubCategoryid,Image=Image,Image2=Image2,isNew=isNew,isDiscount= isDiscount, SalePrice=SalePrice, Video=Video, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price, Sizes= Sizes });
           
             _unitOfWork.Commit();
 
@@ -40,8 +40,11 @@ namespace hd_brand_asp.Controllers
             var lastAddedProduct = _unitOfWork.ProductRep.GetAll().OrderByDescending(p => p.Id).FirstOrDefault();
             if (lastAddedProduct != null)
             {
-                _unitOfWork.ProductRep.procedure(Sizes, lastAddedProduct);
-                _unitOfWork.Commit();
+                if (lastAddedProduct.Categoryid != 3)
+                {
+                    _unitOfWork.ProductRep.procedure(Sizes, lastAddedProduct);
+                    _unitOfWork.Commit();
+                }
             }
          
             return Results.Ok();
@@ -71,7 +74,7 @@ namespace hd_brand_asp.Controllers
         //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Update")]
 
-        public IResult Update([FromForm] int id,[FromForm] string Name, [FromForm] string Artikel, [FromForm] string Image2, [FromForm] bool isNew, [FromForm] bool isDiscount, [FromForm] int? SalePrice, [FromForm] string Image, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
+        public IResult Update([FromForm] int id,[FromForm] string Name, [FromForm] string Image3, [FromForm] string Image2, [FromForm] bool isNew, [FromForm] bool isDiscount, [FromForm] int? SalePrice, [FromForm] string Image, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
         {
          
             try
@@ -90,7 +93,7 @@ namespace hd_brand_asp.Controllers
                     item.Sizes = Sizes;
                     item.Image = Image;
                     item.Video = Video;
-                    item.Artikel = Artikel;
+                    item.Image3 = Image3;
                     item.Image2 = Image2;
                     item.isNew = isNew;
                     item.isDiscount = isDiscount;
@@ -156,6 +159,22 @@ namespace hd_brand_asp.Controllers
 
         {
             return _unitOfWork.ProductRep.getByCategory(id).ToList();
+        }
+
+        [HttpGet]
+        [Route("GetProductsBySubcategory")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsBySubcategory(int id)
+
+        {
+            return _unitOfWork.ProductRep.getByShoeType(id).ToList();
+        }
+
+        [HttpGet]
+        [Route("GetAKNv")]
+        public string GetCities(int id)
+
+        {
+            return "24443d18027301d444ec98b00ef49598";
         }
 
     }

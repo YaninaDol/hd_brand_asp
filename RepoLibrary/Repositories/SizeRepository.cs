@@ -13,5 +13,11 @@ namespace RepoLibrary.Repositories
         }
 
         List<Season> ISizesRep.GetSeasons => db.Seasons.ToList();
+      
+
+        Season ISizesRep.getSeasonById(int id)
+        {
+           return  db.Seasons.Where((x) => x.Id.Equals(id)).FirstOrDefault();
+        }
     }
 }

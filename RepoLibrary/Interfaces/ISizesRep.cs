@@ -14,5 +14,6 @@ namespace RepoLibrary
        
 
         public List< Season> GetSeasons { get; }
+        Season getSeasonById(int id);
     }
 }

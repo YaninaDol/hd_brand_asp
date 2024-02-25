@@ -112,5 +112,6 @@ namespace RepoLibrary.Repositories
         {
            return db.Productssizes.Where((x)=>x.Productid.Equals(id)).ToList();
         }
+        
     }
 }

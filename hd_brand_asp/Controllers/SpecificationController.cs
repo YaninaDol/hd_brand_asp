@@ -6,6 +6,7 @@ using System.Security.Claims;
 using RepoLibrary.Interfaces;
 using hd_brand_asp.Models;
 using RepoLibrary.UnitofWork;
+using hd_brand_asp.Migrations;
 
 namespace WebApplication_Atlantis.Controllers
 {
@@ -22,14 +23,14 @@ namespace WebApplication_Atlantis.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("AddCategory")]
-        public IResult AddCategory([FromForm] string categoryName)
+        public IResult AddCategory([FromForm] string Name)
         {
             try
             {
 
-                _unitOfWork.CategoryRep.Create(new Category() { Name = categoryName });
+                _unitOfWork.CategoryRep.Create(new Category() { Name = Name });
                 _unitOfWork.Commit();
                 return Results.Ok();
 
@@ -40,7 +41,7 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("UpdateCategory")]
         public IResult UpdateCategory([FromForm] int id, [FromForm] string newName)
         {
@@ -66,7 +67,7 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("DeleteCategory")]
         public IResult DeleteCategory([FromForm] int id)
         {
@@ -117,14 +118,14 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("AddMaterial")]
-        public IResult AddMaterial([FromForm] string materialName)
+        public IResult AddMaterial([FromForm] string Name)
         {
             try
             {
 
-                _unitOfWork.MaterialRep.Create(new Material() { Name = materialName });
+                _unitOfWork.MaterialRep.Create(new Material() { Name = Name });
                 _unitOfWork.Commit();
                 return Results.Ok();
 
@@ -135,7 +136,7 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("UpdateMaterial")]
         public IResult UpdateMaterial([FromForm] int id, [FromForm] string newName)
         {
@@ -161,7 +162,7 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("DeleteMaterial")]
         public IResult DeleteMaterial([FromForm] int id)
         {
@@ -215,14 +216,14 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("AddSubCategory")]
-        public IResult AddSubCategory([FromForm] string subCategoryName)
+        public IResult AddSubCategory([FromForm] string Name)
         {
             try
             {
 
-                _unitOfWork.SubCategoryRep.Create(new hd_brand_asp.Models.SubCategory() { Name = subCategoryName });
+                _unitOfWork.SubCategoryRep.Create(new hd_brand_asp.Models.SubCategory() { Name = Name });
                 _unitOfWork.Commit();
                 return Results.Ok();
 
@@ -233,7 +234,7 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("UpdateSubCategory")]
         public IResult UpdateSubCategory([FromForm] int id, [FromForm] string newName)
         {
@@ -259,7 +260,7 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("DeleteSubCategory")]
         public IResult DeleteSubCategory([FromForm] int id)
         {
@@ -309,14 +310,14 @@ namespace WebApplication_Atlantis.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("AddSize")]
-        public IResult AddSize([FromForm] string sizeValue)
+        public IResult AddSize([FromForm] string Name)
         {
             try
             {
 
-                _unitOfWork.SizeRep.Create(new Size() { Value = sizeValue });
+                _unitOfWork.SizeRep.Create(new Size() { Value = Name });
                 _unitOfWork.Commit();
                 return Results.BadRequest();
 
@@ -327,7 +328,7 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("UpdateSize")]
         public IResult UpdateSize([FromForm] int id, [FromForm] string newName)
         {
@@ -353,7 +354,7 @@ namespace WebApplication_Atlantis.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("DeleteSize")]
         public IResult DeleteSize([FromForm] int id)
         {
@@ -400,6 +401,22 @@ namespace WebApplication_Atlantis.Controllers
             catch (Exception ex) { return BadRequest(ex.Message); }
 
         }
+
+        [HttpGet]
+        [Route("GetSeasonById")]
+
+        public  IResult GetSeasonById(int id)
+        {
+            try
+            {
+
+                return Results.Ok(_unitOfWork.SizeRep.getSeasonById(id));
+
+            }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
+
+        }
+
         [HttpGet]
         [Route("GetAllSizes")]
 

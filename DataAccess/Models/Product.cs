@@ -6,7 +6,7 @@ namespace hd_brand_asp.Models;
 public partial class Product
 {
     public int Id { get; set; }
-    public string Artikel { get; set; } = null!;
+    public string Image3 { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string Image { get; set; } = null!;
     public string Image2 { get; set; } = null!;
