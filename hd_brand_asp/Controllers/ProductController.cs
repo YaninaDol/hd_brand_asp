@@ -45,6 +45,11 @@ namespace hd_brand_asp.Controllers
                     _unitOfWork.ProductRep.procedure(Sizes, lastAddedProduct);
                     _unitOfWork.Commit();
                 }
+                else
+                {
+                    _unitOfWork.ProductssizeRep.Create(new Productssize() { Productid = lastAddedProduct.Id, Image = lastAddedProduct.Image, Name = lastAddedProduct.Name,Size="", Price = lastAddedProduct.Price });
+                    _unitOfWork.Commit();
+                }
             }
          
             return Results.Ok();
