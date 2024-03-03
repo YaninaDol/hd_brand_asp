@@ -13,6 +13,7 @@ public partial class Product
     public string Video { get; set; } = null!;
     public bool? isNew { get; set; }
     public bool? isDiscount { get; set; }
+    public bool WeeklyLook { get; set; }
     public string? SubCategoryid { get; set; }
 
     public int? Categoryid { get; set; }

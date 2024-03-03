@@ -1,4 +1,5 @@
 using hd_brand_asp.Data;
+using hd_brand_asp.Migrations;
 using hd_brand_asp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace hd_brand_asp.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Add")]
 
         public IResult Add([FromForm] string Name, [FromForm] string Image, [FromForm] string Image3, [FromForm] string Image2, [FromForm] bool isNew, bool isDiscount,  [FromForm] int? SalePrice,[FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid,  [FromForm] int? Price, [FromForm] string Sizes)
@@ -40,14 +41,14 @@ namespace hd_brand_asp.Controllers
             var lastAddedProduct = _unitOfWork.ProductRep.GetAll().OrderByDescending(p => p.Id).FirstOrDefault();
             if (lastAddedProduct != null)
             {
-                if (lastAddedProduct.Categoryid != 3)
+                if (lastAddedProduct.Sizes != "13")
                 {
                     _unitOfWork.ProductRep.procedure(Sizes, lastAddedProduct);
                     _unitOfWork.Commit();
                 }
                 else
                 {
-                    _unitOfWork.ProductssizeRep.Create(new Productssize() { Productid = lastAddedProduct.Id, Image = lastAddedProduct.Image, Name = lastAddedProduct.Name,Size="", Price = lastAddedProduct.Price });
+                    _unitOfWork.ProductssizeRep.Create(new Productssize() { Productid = lastAddedProduct.Id, Image = lastAddedProduct.Image, Name = lastAddedProduct.Name,Size="one size", Price = lastAddedProduct.Price });
                     _unitOfWork.Commit();
                 }
             }
@@ -57,7 +58,7 @@ namespace hd_brand_asp.Controllers
 
         }
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Delete")]
 
         public IResult Delete([FromForm] int Id)
@@ -76,7 +77,7 @@ namespace hd_brand_asp.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Update")]
 
         public IResult Update([FromForm] int id,[FromForm] string Name, [FromForm] string Image3, [FromForm] string Image2, [FromForm] bool isNew, [FromForm] bool isDiscount, [FromForm] int? SalePrice, [FromForm] string Image, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
@@ -175,11 +176,44 @@ namespace hd_brand_asp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("GetAKNv")]
+
         public string GetCities(int id)
 
         {
             return "24443d18027301d444ec98b00ef49598";
+        }
+
+        [HttpPost]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Route("WeeklyLook")]
+        public IResult WeeklyLook([FromForm] int oldId, [FromForm] int newId)
+
+        {
+            try
+            {
+                var item = _unitOfWork.ProductRep.Get(oldId);
+                var item2 = _unitOfWork.ProductRep.Get(newId);
+                if (item != null && item2!=null)
+                {
+                    item.WeeklyLook = false;
+
+                    _unitOfWork.ProductRep.Update(item);
+                    item2.WeeklyLook = true;
+
+                    _unitOfWork.ProductRep.Update(item2);
+                    _unitOfWork.Commit();
+
+
+                    return Results.Ok();
+                }
+
+                else return Results.Ok("Bad request");
+
+
+            }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
         }
 
     }

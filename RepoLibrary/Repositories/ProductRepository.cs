@@ -95,7 +95,25 @@ namespace RepoLibrary.Repositories
                 }
                 return true;
             }
-            else
+            else if (id == "11")
+            {
+
+                for (int i = 36; i < 42; i++)
+                {
+                    db.Productssizes.Add(new Productssize() { Productid = item.Id, Image = item.Image, Name = item.Name, Size = i.ToString(), Price = item.Price });
+                }
+                return true;
+            }
+            else if (id == "12")
+            {
+
+                for (int i = 28; i < 47; i++)
+                {
+                    db.Productssizes.Add(new Productssize() { Productid = item.Id, Image = item.Image, Name = item.Name, Size = i.ToString(), Price = item.Price });
+                }
+                return true;
+            }
+            else 
             {
 
                
