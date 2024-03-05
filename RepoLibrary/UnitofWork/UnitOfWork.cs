@@ -24,7 +24,7 @@ namespace RepoLibrary.UnitofWork
             MaterialRep = new MaterialRepository(_context);
             SizeRep = new SizeRepository(_context); 
             ProductssizeRep = new ProductssizeRepository(_context);
-
+            ColorRep = new ColorRepository(_context);
         }
     
 
@@ -36,6 +36,7 @@ namespace RepoLibrary.UnitofWork
         public IMaterialRep MaterialRep { get; }
         public ISizesRep SizeRep { get; }
         public IProductssize ProductssizeRep { get; }
+        public IColorRep ColorRep { get; }
 
         public int Commit()=>_context.SaveChanges();    
 

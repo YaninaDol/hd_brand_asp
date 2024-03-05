@@ -429,7 +429,19 @@ namespace WebApplication_Atlantis.Controllers
             catch (Exception ex) { return BadRequest(ex.Message); }
 
         }
-        
+        [HttpGet]
+        [Route("GetAllColors")]
+
+        public async Task<ActionResult<IEnumerable<Color>>> GetAllColors()
+        {
+            try
+            {
+                return _unitOfWork.ColorRep.GetAll().ToList();
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+
+        }
+
         [HttpGet]
         [Route("GetSubCategoryNamesByCategoryId")]
 

@@ -30,10 +30,10 @@ namespace hd_brand_asp.Controllers
         [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Add")]
 
-        public IResult Add([FromForm] string Name, [FromForm] string Image, [FromForm] string Image3, [FromForm] string Image2, [FromForm] bool isNew, bool isDiscount,  [FromForm] int? SalePrice,[FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid,  [FromForm] int? Price, [FromForm] string Sizes)
+        public IResult Add([FromForm] string Name, [FromForm] string Image, [FromForm] string Image3, [FromForm] string Color, [FromForm] string Image2, [FromForm] bool isNew, bool isDiscount,  [FromForm] int? SalePrice,[FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid,  [FromForm] int? Price, [FromForm] string Sizes)
         {
            
-            _unitOfWork.ProductRep.Create(new Product() { Name = Name, Image3 = Image3, SubCategoryid = SubCategoryid,Image=Image,Image2=Image2,isNew=isNew,isDiscount= isDiscount, SalePrice=SalePrice, Video=Video, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price, Sizes= Sizes });
+            _unitOfWork.ProductRep.Create(new Product() { Name = Name, Image3 = Image3, SubCategoryid = SubCategoryid,Image=Image,Image2=Image2,isNew=isNew,isDiscount= isDiscount, SalePrice=SalePrice,Color=Color, Video=Video, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price, Sizes= Sizes });
           
             _unitOfWork.Commit();
 
@@ -80,7 +80,7 @@ namespace hd_brand_asp.Controllers
         [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Update")]
 
-        public IResult Update([FromForm] int id,[FromForm] string Name, [FromForm] string Image3, [FromForm] string Image2, [FromForm] bool isNew, [FromForm] bool isDiscount, [FromForm] int? SalePrice, [FromForm] string Image, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
+        public IResult Update([FromForm] int id,[FromForm] string Name, [FromForm] string Image3, [FromForm] string Image2, [FromForm] string Color, [FromForm] bool isNew, [FromForm] bool isDiscount, [FromForm] int? SalePrice, [FromForm] string Image, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
         {
          
             try
@@ -104,6 +104,7 @@ namespace hd_brand_asp.Controllers
                     item.isNew = isNew;
                     item.isDiscount = isDiscount;
                     item.SalePrice = SalePrice;
+                    item.Color = Color;
                     _unitOfWork.ProductRep.Update(item);
                    
 

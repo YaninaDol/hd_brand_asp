@@ -19,6 +19,7 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
     }
     public virtual DbSet<SeasonType> SeasonTypes { get; set; }
     public virtual DbSet<Material> Materials { get; set; }
+    public virtual DbSet<Color> Colors { get; set; }
     public virtual DbSet<SubCategory> SubCategories { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }

@@ -16,7 +16,7 @@ namespace RepoLibrary.Interfaces
         public IMaterialRep MaterialRep { get; }
         public ISizesRep SizeRep { get; }
         public IProductssize ProductssizeRep { get; }
-
+        public IColorRep ColorRep { get; }
         public int Commit();
     }
 }
