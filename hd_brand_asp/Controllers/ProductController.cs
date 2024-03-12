@@ -2,9 +2,11 @@ using hd_brand_asp.Data;
 using hd_brand_asp.Migrations;
 using hd_brand_asp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RepoLibrary.Interfaces;
 using RepositoriesLibrary.Roles;
+using System.Security.Claims;
 using System.Security.Cryptography;
 
 namespace hd_brand_asp.Controllers
@@ -30,11 +32,11 @@ namespace hd_brand_asp.Controllers
         [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Add")]
 
-        public IResult Add([FromForm] string Name, [FromForm] string Image, [FromForm] string Image3, [FromForm] string Color, [FromForm] string Image2, [FromForm] bool isNew, bool isDiscount,  [FromForm] int? SalePrice,[FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid,  [FromForm] int? Price, [FromForm] string Sizes)
+        public IResult Add([FromForm] string Name, [FromForm] string Image, [FromForm] string Image3, [FromForm] string Color, [FromForm] string Image2, [FromForm] bool isNew, bool isDiscount, [FromForm] int? SalePrice, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int? Price, [FromForm] string Sizes)
         {
-           
-            _unitOfWork.ProductRep.Create(new Product() { Name = Name, Image3 = Image3, SubCategoryid = SubCategoryid,Image=Image,Image2=Image2,isNew=isNew,isDiscount= isDiscount, SalePrice=SalePrice,Color=Color, Video=Video, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price, Sizes= Sizes });
-          
+
+            _unitOfWork.ProductRep.Create(new Product() { Name = Name, Image3 = Image3, SubCategoryid = SubCategoryid, Image = Image, Image2 = Image2, isNew = isNew, isDiscount = isDiscount, SalePrice = SalePrice, Color = Color, Video = Video, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price, Sizes = Sizes });
+
             _unitOfWork.Commit();
 
             //  _cacheService.SetData("Products", _unitOfWork.ProductRep.GetAll(), DateTimeOffset.Now.AddDays(1));
@@ -48,11 +50,11 @@ namespace hd_brand_asp.Controllers
                 }
                 else
                 {
-                    _unitOfWork.ProductssizeRep.Create(new Productssize() { Productid = lastAddedProduct.Id, Image = lastAddedProduct.Image, Name = lastAddedProduct.Name,Size="one size", Price = lastAddedProduct.Price });
+                    _unitOfWork.ProductssizeRep.Create(new Productssize() { Productid = lastAddedProduct.Id, Image = lastAddedProduct.Image, Name = lastAddedProduct.Name, Size = "one size", Price = lastAddedProduct.Price });
                     _unitOfWork.Commit();
                 }
             }
-         
+
             return Results.Ok();
 
 
@@ -68,7 +70,7 @@ namespace hd_brand_asp.Controllers
             _unitOfWork.ProductRep.Delete(Id);
             _unitOfWork.Commit();
 
-            
+
 
             //  _cacheService.SetData("Products", _unitOfWork.ProductRep.GetAll(), DateTimeOffset.Now.AddDays(1));
             return Results.Ok();
@@ -80,14 +82,14 @@ namespace hd_brand_asp.Controllers
         [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Update")]
 
-        public IResult Update([FromForm] int id,[FromForm] string Name, [FromForm] string Image3, [FromForm] string Image2, [FromForm] string Color, [FromForm] bool isNew, [FromForm] bool isDiscount, [FromForm] int? SalePrice, [FromForm] string Image, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
+        public IResult Update([FromForm] int id, [FromForm] string Name, [FromForm] string Image3, [FromForm] string Image2, [FromForm] string Color, [FromForm] bool isNew, [FromForm] bool isDiscount, [FromForm] int? SalePrice, [FromForm] string Image, [FromForm] string Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
         {
-         
+
             try
             {
                 var item = _unitOfWork.ProductRep.Get(id);
                 var listitems = _unitOfWork.ProductRep.updateprocedure(id);
-               
+
                 if (item != null)
                 {
                     item.Name = Name;
@@ -106,7 +108,7 @@ namespace hd_brand_asp.Controllers
                     item.SalePrice = SalePrice;
                     item.Color = Color;
                     _unitOfWork.ProductRep.Update(item);
-                   
+
 
 
                     foreach (var iter in listitems)
@@ -115,7 +117,7 @@ namespace hd_brand_asp.Controllers
                         iter.Price = SalePrice;
                         iter.Image = Image;
                         _unitOfWork.ProductssizeRep.Update(iter);
-                        
+
                     }
                     _unitOfWork.Commit();
                     return Results.Ok();
@@ -149,9 +151,9 @@ namespace hd_brand_asp.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetAll()
 
         {
-            return _unitOfWork.ProductRep.GetAll().ToList(); 
+            return _unitOfWork.ProductRep.GetAll().ToList();
         }
-       
+
         [HttpGet]
         [Route("GetSizeofProduct")]
         public async Task<ActionResult<IEnumerable<Productssize>>> GetSizeofProduct(int id)
@@ -196,7 +198,7 @@ namespace hd_brand_asp.Controllers
             {
                 var item = _unitOfWork.ProductRep.Get(oldId);
                 var item2 = _unitOfWork.ProductRep.Get(newId);
-                if (item != null && item2!=null)
+                if (item != null && item2 != null)
                 {
                     item.WeeklyLook = false;
 
@@ -216,6 +218,6 @@ namespace hd_brand_asp.Controllers
             }
             catch (Exception ex) { return Results.BadRequest(ex.Message); }
         }
-
+        
     }
 }

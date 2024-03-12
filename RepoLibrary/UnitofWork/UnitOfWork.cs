@@ -25,6 +25,10 @@ namespace RepoLibrary.UnitofWork
             SizeRep = new SizeRepository(_context); 
             ProductssizeRep = new ProductssizeRepository(_context);
             ColorRep = new ColorRepository(_context);
+            UkrCityRep = new UkrCityRepository(_context);   
+            UserInfo=new UserInfoRepository(_context);
+            LikedProducts=new LikedProductRepository(_context);
+
         }
     
 
@@ -38,6 +42,9 @@ namespace RepoLibrary.UnitofWork
         public IProductssize ProductssizeRep { get; }
         public IColorRep ColorRep { get; }
 
+        public IUkrCityRep UkrCityRep { get; }
+        public IUserInfo UserInfo { get; }
+        public ILikedProductRep LikedProducts { get; }
         public int Commit()=>_context.SaveChanges();    
 
         public void Dispose()=>_context?.Dispose(); 

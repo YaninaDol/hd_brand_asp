@@ -4,6 +4,7 @@ using hd_brand_asp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using RepositoriesLibrary.Models;
 
 namespace hd_brand_asp.Data;
 
@@ -20,6 +21,9 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
     public virtual DbSet<SeasonType> SeasonTypes { get; set; }
     public virtual DbSet<Material> Materials { get; set; }
     public virtual DbSet<Color> Colors { get; set; }
+    public virtual DbSet<LikedProduct> LikedProduct { get; set; }
+    public virtual DbSet<UkrCity> UkrCities { get; set; }
+    public virtual DbSet<Userinfo> Userinfos { get; set; }
     public virtual DbSet<SubCategory> SubCategories { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
@@ -94,6 +98,7 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.Name).IsRequired();
             
         });
+
 
         modelBuilder.Entity<SubCategory>(entity =>
         {

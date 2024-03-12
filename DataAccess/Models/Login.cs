@@ -4,9 +4,9 @@ namespace RepositoriesLibrary.Models
 {
     public class Login
     {
-        [Required(ErrorMessage = "User name is  Required! ")]
-        public string? UserName { get; set; }
-        [Required(ErrorMessage = "User name is  Required! ")]
+        [Required(ErrorMessage = "User mail is  Required! ")]
+        public string? Email { get; set; }
+        [Required(ErrorMessage = "User password is  Required! ")]
         public string? Password { get; set; }
     }
 }

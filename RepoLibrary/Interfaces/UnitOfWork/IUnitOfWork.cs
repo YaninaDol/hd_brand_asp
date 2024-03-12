@@ -17,6 +17,9 @@ namespace RepoLibrary.Interfaces
         public ISizesRep SizeRep { get; }
         public IProductssize ProductssizeRep { get; }
         public IColorRep ColorRep { get; }
+        public IUkrCityRep UkrCityRep { get; }
+        public IUserInfo UserInfo { get; }
+        public ILikedProductRep LikedProducts { get; }
         public int Commit();
     }
 }

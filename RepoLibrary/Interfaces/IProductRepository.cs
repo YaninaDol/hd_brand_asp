@@ -17,6 +17,7 @@ namespace RepoLibrary
         IEnumerable<Product> getBySeason(int id);
         bool procedure(string id,Product item);
         IEnumerable<Productssize> updateprocedure(int id);
+        
         bool deleteSize(int Id,int Size);
 
     }
