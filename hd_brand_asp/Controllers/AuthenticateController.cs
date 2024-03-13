@@ -392,5 +392,37 @@ namespace WebApplication_Atlantis.Controllers
             }
             return BadRequest("Invalid user ID");
         }
+        [HttpPost]
+        [Route("v1")]
+        [Authorize(Roles = UserRoles.User)]
+        public async Task<IActionResult> v1(string password)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+            {
+                return BadRequest("Invalid user ID");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user != null)
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var result = await _userManager.ResetPasswordAsync(user, token, password);
+
+                if (result.Succeeded)
+                {
+                    return Ok("Password updated successfully");
+                }
+                else
+                {
+                   
+                    return BadRequest("Failed to update password");
+                }
+            }
+
+            return BadRequest("Invalid user ID");
+        }
     }
 }
