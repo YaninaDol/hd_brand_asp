@@ -12,7 +12,7 @@ namespace RepoLibrary
     public interface ILikedProductRep : IGenericRepository<LikedProduct>
     {
        
-        IEnumerable<LikedProduct> GetAllProducts(string userId);
+        IEnumerable<Product> GetAllProducts(string userId);
         bool setProduct(string userId, int prodId, bool like);
         bool getProduct(int prodId);
 

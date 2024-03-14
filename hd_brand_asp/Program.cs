@@ -10,6 +10,7 @@ using RepoLibrary.Interfaces;
 using RepoLibrary;
 using RepoLibrary.Repositories;
 using RepoLibrary.UnitofWork;
+using hd_brand_asp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +50,7 @@ builder.Services.AddTransient<IMaterialRep, MaterialRepository>();
 builder.Services.AddTransient<ISubCategoryRep, SubCategoryRepository>();
 builder.Services.AddTransient<ICategoryRep, CategoryRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<Service>();
 builder.Services.AddDbContext<HdBrandDboContext>(options =>
 options.UseNpgsql(
  builder.Configuration.GetConnectionString("DefaultConnection"),

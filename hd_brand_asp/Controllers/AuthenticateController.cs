@@ -11,7 +11,8 @@ using static System.Net.WebRequestMethods;
 using System.Security.Cryptography.X509Certificates;
 using RepositoriesLibrary.Models;
 using System.Xml.Linq;
-
+using System.Net.Mail;
+using hd_brand_asp;
 
 namespace WebApplication_Atlantis.Controllers
 {
@@ -24,6 +25,7 @@ namespace WebApplication_Atlantis.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
+        
 
         public AuthenticateController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IUnitOfWork unitOfWork)
         {
@@ -31,6 +33,7 @@ namespace WebApplication_Atlantis.Controllers
             _roleManager = roleManager;
             _configuration = configuration;
             _unitOfWork = unitOfWork;
+            
         }
 
         [HttpPost]
@@ -348,7 +351,7 @@ namespace WebApplication_Atlantis.Controllers
             return BadRequest("Invalid user ID");
         }
      
-        [HttpPost]
+        [HttpGet]
         [Route("getAllLikes")]
         [Authorize(Roles = UserRoles.User)]
         public async Task<IActionResult> getAllLikes()
@@ -424,5 +427,7 @@ namespace WebApplication_Atlantis.Controllers
 
             return BadRequest("Invalid user ID");
         }
-    }
+    
+        
+        }
 }

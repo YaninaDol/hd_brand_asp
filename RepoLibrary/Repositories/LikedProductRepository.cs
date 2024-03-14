@@ -15,9 +15,12 @@ namespace RepoLibrary.Repositories
 
        
 
-        public IEnumerable<LikedProduct> GetAllProducts(string userId)
+        public IEnumerable<Product> GetAllProducts(string userId)
         {
-          return  db.LikedProduct.Where((x)=>x.UserId == userId).ToList();    
+            var likedProducts = db.LikedProduct.Where(lp => lp.UserId == userId).Select(lp => lp.ProductId);
+
+            var selectedProducts = db.Products.Where(p => likedProducts.Contains(p.Id)).ToList();
+            return selectedProducts;
         }
 
         public bool getProduct(int prodId)
