@@ -246,6 +246,58 @@ namespace WebApplication_Atlantis.Controllers
 
         
         }
+        [HttpPost]
+        [Route("updateUserbyAdmin")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        public async Task<IActionResult> updateUserbyAdmin([FromForm] string userId,[FromForm] string Name, [FromForm] string SurName, [FromForm] string email, [FromForm] string phonenumber)
+        {
+           
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user != null)
+            {
+                user.UserName = email;
+                user.Email = email;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    try
+                    {
+                        var item = _unitOfWork.UserInfo.GetUserinfo(user.Id);
+                        if (item != null)
+                        {
+                            item.Name = Name;
+                            item.Surname = SurName;
+                            item.Phonenumber = phonenumber;
+                            item.Email = email;
+                            _unitOfWork.UserInfo.Get(item.Id);
+                            _unitOfWork.Commit();
+                            return Ok();
+                        }
+
+                        else return BadRequest("Bad request");
+
+
+                    }
+                    catch (Exception ex) { return BadRequest(ex.Message); }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Update failed!");
+                }
+            }
+            else
+            {
+                return NotFound("User not found");
+            }
+
+
+        }
+
+
 
         [HttpPost]
         [Route("deleteUser")]
@@ -258,6 +310,8 @@ namespace WebApplication_Atlantis.Controllers
             {
 
                 var res = await _userManager.DeleteAsync(user);
+                _unitOfWork.UserInfo.Delete(_unitOfWork.UserInfo.GetUserinfo(userID).Id);
+                _unitOfWork.Commit() ;  
                      return Ok("User deleted!");
             }
             else return BadRequest("Can't delete!");
@@ -373,6 +427,17 @@ namespace WebApplication_Atlantis.Controllers
             }
             return BadRequest("Invalid user ID");
         }
+
+        [HttpGet]
+        [Route("getAllUserInfos")]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        public async Task<IActionResult> getAllUserInfos()
+        {
+            
+                return Ok(_unitOfWork.UserInfo.GetAll().ToList());
+           
+        }
+
         [HttpPost]
         [Route("getlike")]
         [Authorize(Roles = UserRoles.User)]

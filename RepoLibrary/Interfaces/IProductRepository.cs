@@ -1,4 +1,5 @@
 ﻿using hd_brand_asp.Models;
+using Microsoft.AspNetCore.Http;
 using RepoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,10 @@ namespace RepoLibrary
         IEnumerable<Productssize> updateprocedure(int id);
         
         bool deleteSize(int Id,int Size);
+
+        string SaveFile(IFormFile file);
+        public void DeleteFile(string filePath);
+
 
     }
 }

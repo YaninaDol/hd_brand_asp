@@ -1,6 +1,7 @@
 ﻿
 using hd_brand_asp.Data;
 using hd_brand_asp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace RepoLibrary.Repositories
 {
@@ -130,6 +131,42 @@ namespace RepoLibrary.Repositories
         {
            return db.Productssizes.Where((x)=>x.Productid.Equals(id)).ToList();
         }
-        
+        string IProductRepository.SaveFile(IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                string uniqueFileName = GetUniqueFileName(file.FileName);
+                // Путь к корневой папке проекта
+                string uploadsFolder = @"C:\Users\1\OneDrive\Документы\GitHub\hd_brand_front\src\assets";
+                // Путь, куда будет сохранен файл на сервере
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
+                return filePath.Replace('\\', '/');
+            }
+            return null; 
+        }
+
+
+        string GetUniqueFileName(string fileName)
+        {
+            fileName = Path.GetFileName(fileName);
+            return Path.GetFileNameWithoutExtension(fileName)
+                   + "_"
+                   + Guid.NewGuid().ToString().Substring(0, 4)
+                   + Path.GetExtension(fileName);
+        }
+        public void DeleteFile(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
+
     }
 }
