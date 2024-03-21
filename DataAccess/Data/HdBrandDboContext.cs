@@ -21,6 +21,7 @@ public partial class HdBrandDboContext : IdentityDbContext<IdentityUser>
     public virtual DbSet<SeasonType> SeasonTypes { get; set; }
     public virtual DbSet<Material> Materials { get; set; }
     public virtual DbSet<Color> Colors { get; set; }
+    public virtual DbSet<ContentVideo> ContentVideos { get; set; }
     public virtual DbSet<LikedProduct> LikedProduct { get; set; }
     public virtual DbSet<UkrCity> UkrCities { get; set; }
     public virtual DbSet<Userinfo> Userinfos { get; set; }

@@ -28,6 +28,7 @@ namespace RepoLibrary.UnitofWork
             UkrCityRep = new UkrCityRepository(_context);   
             UserInfo=new UserInfoRepository(_context);
             LikedProducts=new LikedProductRepository(_context);
+            ContentVideos=new ContentVideoRepository(_context);
 
         }
     
@@ -45,6 +46,7 @@ namespace RepoLibrary.UnitofWork
         public IUkrCityRep UkrCityRep { get; }
         public IUserInfo UserInfo { get; }
         public ILikedProductRep LikedProducts { get; }
+        public IContentVideo ContentVideos { get; }
         public int Commit()=>_context.SaveChanges();    
 
         public void Dispose()=>_context?.Dispose(); 

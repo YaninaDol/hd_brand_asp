@@ -20,6 +20,7 @@ namespace RepoLibrary.Interfaces
         public IUkrCityRep UkrCityRep { get; }
         public IUserInfo UserInfo { get; }
         public ILikedProductRep LikedProducts { get; }
+        public IContentVideo ContentVideos { get; }
         public int Commit();
     }
 }

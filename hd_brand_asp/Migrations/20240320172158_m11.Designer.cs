@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hd_brand_asp.Data;
@@ -11,9 +12,11 @@ using hd_brand_asp.Data;
 namespace hd_brand_asp.Migrations
 {
     [DbContext(typeof(HdBrandDboContext))]
-    partial class HdBrandDboContextModelSnapshot : ModelSnapshot
+    [Migration("20240320172158_m11")]
+    partial class m11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,26 +260,6 @@ namespace hd_brand_asp.Migrations
                     b.ToTable("Colors");
                 });
 
-            modelBuilder.Entity("hd_brand_asp.Models.ContentVideo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("URL")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("prodId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ContentVideos");
-                });
-
             modelBuilder.Entity("hd_brand_asp.Models.LikedProduct", b =>
                 {
                     b.Property<int>("Id")
@@ -334,9 +317,11 @@ namespace hd_brand_asp.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Image2")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Image3")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int?>("Materialid")
@@ -367,6 +352,7 @@ namespace hd_brand_asp.Migrations
                         .HasColumnName("subcategory");
 
                     b.Property<string>("Video")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("WeeklyLook")

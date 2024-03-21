@@ -233,6 +233,85 @@ namespace hd_brand_asp.Controllers
             }
             catch (Exception ex) { return Results.BadRequest(ex.Message); }
         }
-        
+        [HttpPost]
+       //[Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Route("SetVideoItem")]
+        public IResult SetVideoItem(IFormFile Video,[FromForm] int prodId)
+        {
+            string videoPath = _unitOfWork.ProductRep.SaveFile(Video);
+            try {
+                _unitOfWork.ContentVideos.Create(new ContentVideo() { URL = videoPath, prodId = prodId });
+                _unitOfWork.Commit();
+                return Results.Ok();
+            }
+            catch { return Results.BadRequest(); }
+
+            
+        }
+
+        [HttpPost]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Route("UpdateVideoContent")]
+        public IResult UpdateVideoContent([FromForm] int id, IFormFile video)
+        {
+            string videoPath = _unitOfWork.ProductRep.SaveFile(video);
+            try
+            {
+                var item = _unitOfWork.ContentVideos.Get(id);
+                if (item != null)
+                {
+                    item.URL = videoPath;
+                  
+                    _unitOfWork.ContentVideos.Update(item);
+                    _unitOfWork.Commit();
+                    return Results.Ok();
+                }
+
+                else return Results.Ok("Bad request");
+
+
+            }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
+
+        }
+        [HttpPost]
+        [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
+        [Route("UpdateProductContent")]
+        public IResult UpdateProductContent([FromForm] int id, [FromForm] int prodId)
+        {
+          
+            try
+            {
+                var item = _unitOfWork.ContentVideos.Get(id);
+                if (item != null)
+                {
+                 
+                    item.prodId = prodId;
+                    _unitOfWork.ContentVideos.Update(item);
+                    _unitOfWork.Commit();
+                    return Results.Ok();
+                }
+
+                else return Results.Ok("Bad request");
+
+
+            }
+            catch (Exception ex) { return Results.BadRequest(ex.Message); }
+
+        }
+
+        [HttpGet]
+        [Route("GetContentVideo")]
+
+        public async Task<ActionResult<IEnumerable<ContentVideo>>> GetContentVideo()
+        {
+            try
+            {
+                return _unitOfWork.ContentVideos.GetAll().ToList();
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+
+        }
+
     }
 }

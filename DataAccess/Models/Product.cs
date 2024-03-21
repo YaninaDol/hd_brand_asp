@@ -6,11 +6,11 @@ namespace hd_brand_asp.Models;
 public partial class Product
 {
     public int Id { get; set; }
-    public string Image3 { get; set; } = null!;
+    public string? Image3 { get; set; }
     public string Name { get; set; } = null!;
     public string Image { get; set; } = null!;
-    public string Image2 { get; set; } = null!;
-    public string Video { get; set; } = null!;
+    public string? Image2 { get; set; } 
+    public string? Video { get; set; } 
     public bool? isNew { get; set; }
     public bool? isDiscount { get; set; }
     public bool WeeklyLook { get; set; }
