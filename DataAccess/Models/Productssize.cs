@@ -11,6 +11,7 @@ public partial class Productssize
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public int Productid { get; set; }
+    public string Article { get; set; }
     public string Size { get; set; }
 
    

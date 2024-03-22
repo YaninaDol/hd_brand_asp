@@ -32,7 +32,7 @@ namespace hd_brand_asp.Controllers
         [HttpPost]
         [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Add")]
-        public IResult Add([FromForm] string Name, IFormFile Video, IFormFile Image, IFormFile  Image3, IFormFile Image2, [FromForm] string Color,  [FromForm] bool isNew, bool isDiscount, [FromForm] int? SalePrice, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int? Price, [FromForm] string Sizes)
+        public IResult Add([FromForm] string Article, [FromForm] string Name, IFormFile Video, IFormFile Image, IFormFile  Image3, IFormFile Image2, [FromForm] string Color,  [FromForm] bool isNew, bool isDiscount, [FromForm] int? SalePrice, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int? Price, [FromForm] string Sizes)
         {
             string imagePath = _unitOfWork.ProductRep.SaveFile(Image);
             string imagePath2 = _unitOfWork.ProductRep.SaveFile(Image2);
@@ -40,7 +40,7 @@ namespace hd_brand_asp.Controllers
 
             
             string videoPath = _unitOfWork.ProductRep.SaveFile(Video);
-            _unitOfWork.ProductRep.Create(new Product() { Name = Name, Image3 = imagePath3, SubCategoryid = SubCategoryid, Image = imagePath, Image2 = imagePath2, isNew = isNew, isDiscount = isDiscount, SalePrice = SalePrice, Color = Color, Video = videoPath, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price, Sizes = Sizes });
+            _unitOfWork.ProductRep.Create(new Product() {Article=Article, Name = Name, Image3 = imagePath3, SubCategoryid = SubCategoryid, Image = imagePath, Image2 = imagePath2, isNew = isNew, isDiscount = isDiscount, SalePrice = SalePrice, Color = Color, Video = videoPath, Categoryid = Categoryid, Seasonid = Seasonid, Materialid = Materialid, Price = Price, Sizes = Sizes });
 
             _unitOfWork.Commit();
 
@@ -54,7 +54,7 @@ namespace hd_brand_asp.Controllers
                 }
                 else
                 {
-                    _unitOfWork.ProductssizeRep.Create(new Productssize() { Productid = lastAddedProduct.Id, Image = lastAddedProduct.Image, Name = lastAddedProduct.Name, Size = "one size", Price = lastAddedProduct.Price });
+                    _unitOfWork.ProductssizeRep.Create(new Productssize() {Article=lastAddedProduct.Article, Productid = lastAddedProduct.Id, Image = lastAddedProduct.Image, Name = lastAddedProduct.Name, Size = "one size", Price = lastAddedProduct.Price });
                     _unitOfWork.Commit();
                 }
             }
@@ -86,7 +86,7 @@ namespace hd_brand_asp.Controllers
         [Authorize(Roles = $"{UserRoles.Menager},{UserRoles.Admin}")]
         [Route("Update")]
 
-        public IResult Update([FromForm] int id, [FromForm] string Name, IFormFile Image3, IFormFile Image2, [FromForm] string Color, [FromForm] bool isNew, [FromForm] bool isDiscount, [FromForm] int? SalePrice, IFormFile Image, IFormFile Video, [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
+        public IResult Update([FromForm] int id, [FromForm] string Article, [FromForm] string Name,[FromForm] string Color, [FromForm] bool isNew, [FromForm] bool isDiscount, [FromForm] int? SalePrice,  [FromForm] string SubCategoryid, [FromForm] int? Categoryid, [FromForm] int? Seasonid, [FromForm] int Materialid, [FromForm] int Price, [FromForm] string Sizes)
         {
 
             try
@@ -101,12 +101,12 @@ namespace hd_brand_asp.Controllers
                    // _unitOfWork.ProductRep.DeleteFile(item.Image.Replace('/', '\\'));
                   //  _unitOfWork.ProductRep.DeleteFile(item.Image.Replace('/', '\\'));
 
-                    string imagePath = _unitOfWork.ProductRep.SaveFile(Image);
-                    string imagePath2 = _unitOfWork.ProductRep.SaveFile(Image2);
-                    string imagePath3 = _unitOfWork.ProductRep.SaveFile(Image3);
-                    string videoPath = _unitOfWork.ProductRep.SaveFile(Video);
+                   // string imagePath = _unitOfWork.ProductRep.SaveFile(Image);
+                  //  string imagePath2 = _unitOfWork.ProductRep.SaveFile(Image2);
+                  //  string imagePath3 = _unitOfWork.ProductRep.SaveFile(Image3);
+                   // string videoPath = _unitOfWork.ProductRep.SaveFile(Video);
 
-
+                    item.Article = Article;
                     item.Name = Name;
                     item.SubCategoryid = SubCategoryid;
                     item.Price = Price;
@@ -114,10 +114,10 @@ namespace hd_brand_asp.Controllers
                     item.Categoryid = Categoryid;
                     item.Seasonid = Seasonid;
                     item.Sizes = Sizes;
-                    item.Image = imagePath;
-                    item.Video = videoPath;
-                    item.Image3 = imagePath3;
-                    item.Image2 = imagePath2;
+                 //   item.Image = imagePath;
+                 //   item.Video = videoPath;
+                 //   item.Image3 = imagePath3;
+                 //   item.Image2 = imagePath2;
                     item.isNew = isNew;
                     item.isDiscount = isDiscount;
                     item.SalePrice = SalePrice;
@@ -129,8 +129,9 @@ namespace hd_brand_asp.Controllers
                     foreach (var iter in listitems)
                     {
                         iter.Name = Name;
+                        iter.Article = Article;
                         iter.Price = SalePrice;
-                        iter.Image = imagePath;
+                      //  iter.Image = imagePath;
                         _unitOfWork.ProductssizeRep.Update(iter);
 
                     }
