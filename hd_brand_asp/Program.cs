@@ -52,6 +52,7 @@ builder.Services.AddTransient<ICategoryRep, CategoryRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<Service>();
 builder.Services.AddDbContext<HdBrandDboContext>(options =>
+
 options.UseNpgsql(
  builder.Configuration.GetConnectionString("DefaultConnection"),
   b => b.MigrationsAssembly("hd_brand_asp")));
